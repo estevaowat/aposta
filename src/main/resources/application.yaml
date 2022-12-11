@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ewcode
+    url: jdbc:mysql://localhost:3306/friends-big-ball
+    password: ewcode123
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
