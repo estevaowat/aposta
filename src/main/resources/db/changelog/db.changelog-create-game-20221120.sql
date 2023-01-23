@@ -1,4 +1,4 @@
-create table if not exists game
+create table game
 (
     start          datetime not null primary key,
     status         enum ('NOT_STARTED', 'IN_PROGRESS', 'FINISHED'),

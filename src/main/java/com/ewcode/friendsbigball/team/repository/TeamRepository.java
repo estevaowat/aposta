@@ -1,6 +1,6 @@
 package com.ewcode.friendsbigball.team.repository;
 
-import com.ewcode.friendsbigball.common.entities.Team;
+import com.ewcode.friendsbigball.common.entity.Team;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

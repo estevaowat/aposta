@@ -1,3 +1,5 @@
+server:
+  port: 9090
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -6,3 +8,10 @@ spring:
     password: ewcode123
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
+  kafka:
+    bootstrap-servers: "192.168.15.168:29092"
+    producer:
+      bootstrap-servers: "192.168.15.168:29092"
+    consumer:
+      group-id: foo
+      bootstrap-servers: "192.168.15.168:29092"

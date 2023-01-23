@@ -1,0 +1,23 @@
+server:
+  port: 9090
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    url: jdbc:h2:mem:friends-big-ball;CASE_INSENSITIVE_IDENTIFIERS=TRUE
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-test-master.yaml
+    enabled: true
+    contexts: main,test
+  kafka:
+    bootstrap-servers: "192.168.15.168:29092"
+    producer:
+      bootstrap-servers: "192.168.15.168:29092"
+    consumer:
+      group-id: foo
+      bootstrap-servers: "192.168.15.168:29092"
