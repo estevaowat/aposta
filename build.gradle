@@ -2,6 +2,8 @@ plugins {
     id "org.springframework.boot" version "3.0.0"
     id "io.spring.dependency-management" version "1.1.0"
     id "java"
+    id("com.adarshr.test-logger") version "3.2.0"
+    id "name.remal.sonarlint" version "3.0.3"
 }
 
 def springbootVersion = "3.0.1"
@@ -14,7 +16,6 @@ repositories {
 }
 
 configurations {
-
     all {
         exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
     }
@@ -25,13 +26,19 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springbootVersion"
     implementation "org.springframework.boot:spring-boot-starter-web:$springbootVersion"
     implementation "org.springframework.boot:spring-boot-starter-log4j2:$springbootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-validation:$springbootVersion"
+
+    // implementation 'org.springframework.cloud:spring-cloud-aws:2.2.6.RELEASE'
+    // implementation 'org.springframework.cloud:spring-cloud-aws-messaging:2.2.6.RELEASE'
     implementation "org.springframework.kafka:spring-kafka"
     implementation "org.liquibase:liquibase-core:4.18.0"
     implementation "org.modelmapper:modelmapper:3.1.1"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
 
+
     developmentOnly "org.springframework.boot:spring-boot-devtools:$springbootVersion"
 
+    runtimeOnly "org.springframework.boot:spring-boot-devtools"
     runtimeOnly "com.mysql:mysql-connector-j:8.0.31"
     runtimeOnly "com.h2database:h2"
 
@@ -41,4 +48,21 @@ dependencies {
 
 tasks.named("test") {
     useJUnitPlatform()
+}
+
+testlogger {
+    showExceptions true
+    showStackTraces true
+    showFullStackTraces false
+    showCauses true
+    slowThreshold 5000
+    showSummary true
+    showPassed true
+    showSkipped true
+    showFailed true
+}
+
+
+bootBuildImage {
+    imageName = 'friend-big-ball-app'
 }

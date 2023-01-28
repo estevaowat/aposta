@@ -10,6 +10,7 @@ import com.ewcode.friendsbigball.team.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameService {
@@ -33,8 +34,13 @@ public class GameService {
   }
 
   private Game createGame(GameDto gameDto) {
-    Game game = gameRepository.findById(gameDto.start()).orElse(new Game());
-    return populateGame(game, gameDto);
+    Optional<Game> game = gameRepository.findById(gameDto.start());
+
+    if (game.isEmpty()) {
+      return new Game();
+    }
+
+    return populateGame(game.get(), gameDto);
   }
 
   public List<Game> saveAll(List<GameDto> games) {

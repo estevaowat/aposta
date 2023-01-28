@@ -3,6 +3,9 @@ package com.ewcode.friendsbigball.costumer.resource;
 import com.ewcode.friendsbigball.common.entity.Costumer;
 import com.ewcode.friendsbigball.costumer.resource.dto.CreateCostumerDto;
 import com.ewcode.friendsbigball.costumer.service.CostumerService;
+import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/costumer")
+@RequestMapping("costumer")
 public class CostumerResource {
   private final CostumerService costumerService;
+  Logger logger = LogManager.getLogger(CostumerResource.class);
 
   @Autowired
   public CostumerResource(CostumerService costumerService) {
@@ -22,8 +26,10 @@ public class CostumerResource {
   }
 
   @PostMapping
-  public ResponseEntity<String> create(CreateCostumerDto costumer) {
+  public ResponseEntity<String> create(@RequestBody @Valid CreateCostumerDto costumer) {
+    logger.info("Creating costumer");
     costumerService.create(costumer);
+    logger.info("Costumer created");
     return ResponseEntity.ok("costumer created");
   }
 

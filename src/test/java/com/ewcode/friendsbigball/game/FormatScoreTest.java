@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDateTime;
 
-public class FormatScoreTest {
+class FormatScoreTest {
 
   @DisplayName("when higher score is in left ")
   @ParameterizedTest

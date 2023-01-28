@@ -23,7 +23,7 @@ public class BetConsumer {
     this.betService = betService;
   }
 
-  @KafkaListener(topics = "BOOK_BETS", groupId = "foo")
+  @KafkaListener(topics = "BOOK_BETS", groupId = "foo", autoStartup = "false")
   public void listen(String message) throws JsonProcessingException {
       logger.info("Consuming BOOK_BETS messsage");
       logger.debug("message = {}", message);

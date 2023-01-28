@@ -16,5 +16,4 @@ public interface CostumerRepository extends JpaRepository<Costumer, Integer> {
     """,
             nativeQuery = true)
     Page<Costumer> findByFilter(@Param("filter") String filter, Pageable pageable);
-
 }

@@ -1,9 +1,11 @@
 package com.ewcode.friendsbigball.costumer.resource.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class CreateCostumerDto {
 
-  private String name;
-  private String email;
+  @NotNull private String name;
+  @NotNull private String email;
 
   public CreateCostumerDto() { //
   }
@@ -24,5 +26,10 @@ public class CreateCostumerDto {
   public CreateCostumerDto setEmail(String email) {
     this.email = email;
     return this;
+  }
+
+  @Override
+  public String toString() {
+    return "CreateCostumerDto{" + "name='" + name + '\'' + ", email='" + email + '\'' + '}';
   }
 }
