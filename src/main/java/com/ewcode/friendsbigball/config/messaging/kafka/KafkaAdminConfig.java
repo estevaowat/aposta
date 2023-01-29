@@ -1,4 +1,4 @@
-package com.ewcode.friendsbigball.config.kafka;
+package com.ewcode.friendsbigball.config.messaging.kafka;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;

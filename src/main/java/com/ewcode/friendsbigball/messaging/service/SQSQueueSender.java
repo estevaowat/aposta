@@ -5,16 +5,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SQSQueueSender {
-  //  private final QueueMessagingTemplate queueMessagingTemplate;
 
   @Autowired
-  public SQSQueueSender(
-      //        QueueMessagingTemplate queueMessagingTemplate
-      ) {
-    //    this.queueMessagingTemplate = queueMessagingTemplate;
+  public SQSQueueSender() {
+    //
   }
 
   public void send(String destinationName, String message) {
-    //  queueMessagingTemplate.send(destinationName, MessageBuilder.withPayload(message).build());
+    //
   }
 }

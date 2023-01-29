@@ -1,6 +1,7 @@
 package com.ewcode.friendsbigball.costumer.resource;
 
 import com.ewcode.friendsbigball.common.entity.Costumer;
+import com.ewcode.friendsbigball.config.log.LogInfo;
 import com.ewcode.friendsbigball.costumer.resource.dto.CreateCostumerDto;
 import com.ewcode.friendsbigball.costumer.service.CostumerService;
 import jakarta.validation.Valid;
@@ -18,18 +19,21 @@ import java.util.Optional;
 @RequestMapping("costumer")
 public class CostumerResource {
   private final CostumerService costumerService;
+  private final LogInfo logInfo;
   Logger logger = LogManager.getLogger(CostumerResource.class);
 
   @Autowired
-  public CostumerResource(CostumerService costumerService) {
+  public CostumerResource(CostumerService costumerService, LogInfo logInfo) {
     this.costumerService = costumerService;
+    this.logInfo = logInfo;
   }
 
   @PostMapping
   public ResponseEntity<String> create(@RequestBody @Valid CreateCostumerDto costumer) {
-    logger.info("Creating costumer");
+    logger.info(logInfo.getCorrelationLog() + "Creating costumer");
+
     costumerService.create(costumer);
-    logger.info("Costumer created");
+    logger.info(logInfo.getCorrelationLog() + "Costumer created");
     return ResponseEntity.ok("costumer created");
   }
 

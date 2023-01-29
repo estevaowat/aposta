@@ -1,4 +1,4 @@
-package com.ewcode.friendsbigball.config.kafka;
+package com.ewcode.friendsbigball.config.messaging.kafka;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.IntegerSerializer;

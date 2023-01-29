@@ -1,8 +1,8 @@
-FROM gradle:7.6.0-jdk17
+FROM eclipse-temurin:17
 VOLUME /tmp
 WORKDIR /app
 COPY . /app
-EXPOSE 8000
+EXPOSE 8080
 
 # fetch dependencies
 RUN chmod +x ./scripts/run.sh

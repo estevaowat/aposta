@@ -2,9 +2,11 @@ version: '3'
 services:
   app:
     image: friend-big-ball-app
-    container_name: friends_big_ball_app
+    container_name: friends-big-ball-app
     depends_on:
       - mysql
+      - kafka
+      - zookeeper
     build:
       context: ./
       dockerfile: Dockerfile
