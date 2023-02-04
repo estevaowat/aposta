@@ -1,19 +1,19 @@
 version: '3'
 services:
-  app:
-    image: friend-big-ball-app
-    container_name: friends-big-ball-app
-    depends_on:
-      - mysql
-      - kafka
-      - zookeeper
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    ports:
-      - '8080:8080'
-    expose:
-      - '8080'
+  #  app:
+  #    image: friend-big-ball-app
+  #    container_name: friends-big-ball-app
+  #    depends_on:
+  #      - mysql
+  #      - kafka
+  #      - zookeeper
+  #    build:
+  #      context: ./
+  #      dockerfile: Dockerfile
+  #    ports:
+  #      - '8080:8080'
+  #    expose:
+  #      - '8080'
   database:
     image: mysql
     restart: always
@@ -33,14 +33,18 @@ services:
     container_name: kafka-ui
     ports:
       - '9090:9090'
+    expose:
+      - '9090'
     restart: always
     depends_on:
       - kafka
       - zookeeper
     environment:
       KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: host.docker.internal:29092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 192.168.15.168:29092
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    networks:
+      - engine-network
   zookeeper:
     image: confluentinc/cp-zookeeper
     environment:
@@ -48,6 +52,8 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - '22181:2181'
+    networks:
+      - engine-network
   kafka:
     image: confluentinc/cp-kafka
     depends_on:
@@ -61,5 +67,10 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - engine-network
 volumes:
   dbdata:
+networks:
+  engine-network:
+    driver: bridge

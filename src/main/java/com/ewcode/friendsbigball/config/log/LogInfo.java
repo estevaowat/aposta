@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class LogInfo {
+  public static final String template = "[{}] -> {}";
   private LocalDateTime requestDate;
   private String correlationId;
 

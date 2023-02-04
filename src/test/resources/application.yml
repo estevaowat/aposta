@@ -22,7 +22,6 @@ spring:
     producer:
       bootstrap-servers: "192.168.15.168:29092"
     consumer:
-      group-id: foo
       bootstrap-servers: "192.168.15.168:29092"
   jpa:
     properties:

@@ -1,5 +1,6 @@
 package com.ewcode.friendsbigball.bet.service;
 
+import com.ewcode.friendsbigball.bet.dto.BookBetDto;
 import com.ewcode.friendsbigball.bet.repository.BetRepository;
 import com.ewcode.friendsbigball.common.entity.Bet;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,8 @@ public class BetService {
     return betRepository.findBetsToBook();
   }
 
-  public void book(List<Bet> bets) {
-    // validate bets
+  public void book(BookBetDto dto) {
+    // validate bet
     // save
   }
 }
