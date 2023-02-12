@@ -13,26 +13,26 @@ import java.io.IOException;
 
 @Component
 public class BetConsumer {
-  private final ObjectMapper mapper;
-  private final BetService betService;
-  private final LogInfo logInfo;
-  Logger logger = LogManager.getLogger(BetConsumer.class);
+    final Logger logger = LogManager.getLogger(BetConsumer.class);
+    private final ObjectMapper mapper;
+    private final BetService betService;
+    private final LogInfo logInfo;
 
-  public BetConsumer(ObjectMapper mapper, BetService betService, LogInfo logInfo) {
-    this.mapper = mapper;
-    this.betService = betService;
-    this.logInfo = logInfo;
-  }
+    public BetConsumer(ObjectMapper mapper, BetService betService, LogInfo logInfo) {
+        this.mapper = mapper;
+        this.betService = betService;
+        this.logInfo = logInfo;
+    }
 
-  @KafkaListener(topics = "book_bet", id = "book_bet")
-  public void listen(byte[] message) throws IOException {
-    logger.info(LogInfo.template, logInfo.getCorrelationId(), "converting byte[] to dto");
+    @KafkaListener(topics = "book_bet", id = "book_bet")
+    public void listen(byte[] message) throws IOException {
+      logger.info(LogInfo.template, logInfo.getCorrelationId(), "converting byte[] to dto");
 
-    BookBetDto bet = mapper.readValue(message, BookBetDto.class);
-    logger.info(LogInfo.template, logInfo.getCorrelationId(), "converted byte[] to dto");
+        BookBetDto bet = mapper.readValue(message, BookBetDto.class);
+      logger.info(LogInfo.template, logInfo.getCorrelationId(), "converted byte[] to dto");
 
-    logger.info(LogInfo.template, logInfo.getCorrelationId(), "starting book bet");
+      logger.info(LogInfo.template, logInfo.getCorrelationId(), "starting book bet");
 
-    betService.book(bet);
-  }
+      betService.book(bet);
+    }
 }

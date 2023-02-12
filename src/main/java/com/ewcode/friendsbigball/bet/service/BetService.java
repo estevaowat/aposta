@@ -10,18 +10,17 @@ import java.util.List;
 @Service
 public class BetService {
 
-  private final BetRepository betRepository;
+    private final BetRepository betRepository;
 
-  public BetService(BetRepository betRepository) {
-    this.betRepository = betRepository;
-  }
+    public BetService(BetRepository betRepository) {
+        this.betRepository = betRepository;
+    }
 
-  public List<Bet> findBetsToBook() {
-    return betRepository.findBetsToBook();
-  }
+    public List<Bet> findBetsToBook() {
+        return betRepository.findBetsToBook();
+    }
 
-  public void book(BookBetDto dto) {
-    // validate bet
-    // save
-  }
+    public void book(BookBetDto dto) {
+
+    }
 }

@@ -7,25 +7,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaMessageSender {
 
-  private final KafkaTemplate<String, byte[]> template;
-  // private final ReplyingKafkaTemplate<String, String, String> replyingKafkaTemplate;
+    private final KafkaTemplate<String, byte[]> template;
 
-  @Autowired
-  public KafkaMessageSender(KafkaTemplate<String, byte[]> template
-                            //      ReplyingKafkaTemplate<String, String, String> replyingKafkaTemplate
-      ) {
-    this.template = template;
-    // this.replyingKafkaTemplate = replyingKafkaTemplate;
-  }
 
-  public void send(String destinationName, byte[] message) {
-    template.send(destinationName, message);
-  }
+    @Autowired
+    public KafkaMessageSender(KafkaTemplate<String, byte[]> template
 
-  //  public CompletableFuture<SendResult<String, String>> sendAndReceive(
-  //          String destinationName, String message) {
-  //    ProducerRecord<String, String> producerRecord = new ProducerRecord<>(destinationName,
-  // message);
-  //    return replyingKafkaTemplate.sendAndReceive(producerRecord).getSendFuture();
-  //  }
+    ) {
+        this.template = template;
+
+    }
+
+    public void send(String destinationName, byte[] message) {
+      template.send(destinationName, message);
+    }
+
+
 }

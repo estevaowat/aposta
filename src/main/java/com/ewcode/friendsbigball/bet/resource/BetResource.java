@@ -21,38 +21,33 @@ import java.nio.charset.StandardCharsets;
 @RequestMapping("bet")
 public class BetResource {
 
-  private final KafkaMessageSender kafkaMessageSender;
-  private final ObjectMapper mapper;
-  private final LogInfo logInfo;
-  Logger logger = LogManager.getLogger(BetResource.class);
+    private final KafkaMessageSender kafkaMessageSender;
+    private final ObjectMapper mapper;
+    private final LogInfo logInfo;
+    private final Logger logger = LogManager.getLogger(BetResource.class);
 
-  @Autowired
-  public BetResource(KafkaMessageSender kafkaMessageSender, ObjectMapper mapper, LogInfo logInfo) {
-    this.kafkaMessageSender = kafkaMessageSender;
-    this.mapper = mapper;
-    this.logInfo = logInfo;
-  }
+    @Autowired
+    public BetResource(KafkaMessageSender kafkaMessageSender, ObjectMapper mapper, LogInfo logInfo) {
+        this.kafkaMessageSender = kafkaMessageSender;
+        this.mapper = mapper;
+        this.logInfo = logInfo;
+    }
 
-  @PostMapping
-  public ResponseEntity<Void> sendBetsToBook() {
-    return ResponseEntity.ok().build();
-  }
+    @PostMapping
+    public ResponseEntity<Void> sendBetsToBook() {
+        return ResponseEntity.ok().build();
+    }
 
-  @PostMapping("create")
-  public ResponseEntity<String> createBet(@RequestBody BookBetDto body)
-      throws JsonProcessingException {
-    logger.info(LogInfo.template, logInfo.getCorrelationId(), "Starting request");
-    byte[] dto = mapper.writeValueAsString(body).getBytes(StandardCharsets.UTF_8);
+    @PostMapping("create")
+    public ResponseEntity<String> createBet(@RequestBody BookBetDto body) throws JsonProcessingException {
+        logger.info(LogInfo.template, logInfo.getCorrelationId(), "Starting request");
 
-    logger.info(LogInfo.template, logInfo.getCorrelationId(), "Converting dto to byte[]");
-    logger.info(
-        LogInfo.template,
-            logInfo.getCorrelationId(),
-        "Sending dto to topic " + BetTopic.BOOK_BET_TOPIC);
+        byte[] dto = mapper.writeValueAsString(body).getBytes(StandardCharsets.UTF_8);
+        logger.info(LogInfo.template, logInfo.getCorrelationId(), "Converting dto to byte[]");
+        logger.info(LogInfo.template, logInfo.getCorrelationId(), "Sending dto to topic " + BetTopic.BOOK_BET_TOPIC);
+        kafkaMessageSender.send(BetTopic.BOOK_BET_TOPIC, dto);
+        logger.info(LogInfo.template, logInfo.getCorrelationId(), "Message sent");
 
-    kafkaMessageSender.send(BetTopic.BOOK_BET_TOPIC, dto);
-
-    logger.info(LogInfo.template, logInfo.getCorrelationId(), "Message sent");
-    return ResponseEntity.ok("Message sent");
-  }
+        return ResponseEntity.ok("Message sent");
+    }
 }

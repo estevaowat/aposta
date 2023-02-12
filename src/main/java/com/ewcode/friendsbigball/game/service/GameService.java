@@ -15,48 +15,45 @@ import java.util.Optional;
 @Service
 public class GameService {
 
-  private final TeamRepository teamRepository;
-  private final PlayerRepository playerRepository;
-  private final GameRepository gameRepository;
+    private final TeamRepository teamRepository;
+    private final PlayerRepository playerRepository;
+    private final GameRepository gameRepository;
 
-  public GameService(
-          TeamRepository teamRepository,
-          PlayerRepository playerRepository,
-          GameRepository gameRepository) {
-    this.teamRepository = teamRepository;
-    this.playerRepository = playerRepository;
-    this.gameRepository = gameRepository;
-  }
-
-  public Game save(GameDto gameDto) {
-    Game game = createGame(gameDto);
-    return gameRepository.save(game);
-  }
-
-  private Game createGame(GameDto gameDto) {
-    Optional<Game> game = gameRepository.findById(gameDto.start());
-
-    if (game.isEmpty()) {
-      return new Game();
+    public GameService(
+            TeamRepository teamRepository,
+            PlayerRepository playerRepository,
+            GameRepository gameRepository) {
+        this.teamRepository = teamRepository;
+        this.playerRepository = playerRepository;
+        this.gameRepository = gameRepository;
     }
 
-    return populateGame(game.get(), gameDto);
-  }
+    public Game save(GameDto gameDto) {
+        Game game = createGame(gameDto);
+        return gameRepository.save(game);
+    }
 
-  public List<Game> saveAll(List<GameDto> games) {
-    List<Game> gamesToSave = games.stream().map(this::createGame).toList();
-    return gameRepository.saveAll(gamesToSave);
-  }
+    private Game createGame(GameDto gameDto) {
+        Optional<Game> gameOpt = gameRepository.findById(gameDto.start());
 
-  private Game populateGame(Game game, GameDto gameDto) {
-    Team teamWinner = teamRepository.findById(gameDto.winnerTeamId()).orElse(null);
-    Player bestPlayer = playerRepository.findById(gameDto.bestPlayerId()).orElse(null);
+        return gameOpt.map(game -> populateGame(game, gameDto)).orElseGet(Game::new);
 
-    game.setStart(gameDto.start());
-    game.setStatus(gameDto.status());
-    game.setScore(gameDto.formatScore());
-    game.setWinnerTeam(teamWinner);
-    game.setBestPlayer(bestPlayer);
-    return game;
-  }
+    }
+
+    public List<Game> saveAll(List<GameDto> games) {
+        List<Game> gamesToSave = games.stream().map(this::createGame).toList();
+        return gameRepository.saveAll(gamesToSave);
+    }
+
+    private Game populateGame(Game game, GameDto gameDto) {
+        Team teamWinner = teamRepository.findById(gameDto.winnerTeamId()).orElse(null);
+        Player bestPlayer = playerRepository.findById(gameDto.bestPlayerId()).orElse(null);
+
+        game.setStart(gameDto.start());
+        game.setStatus(gameDto.status());
+        game.setScore(gameDto.formatScore());
+        game.setWinnerTeam(teamWinner);
+        game.setBestPlayer(bestPlayer);
+        return game;
+    }
 }

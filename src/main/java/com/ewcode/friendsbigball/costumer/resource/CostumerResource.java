@@ -17,36 +17,37 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("costumer")
+
 public class CostumerResource {
-  private final CostumerService costumerService;
-  private final LogInfo logInfo;
-  Logger logger = LogManager.getLogger(CostumerResource.class);
+    final Logger logger = LogManager.getLogger(CostumerResource.class);
+    private final CostumerService costumerService;
+    private final LogInfo logInfo;
 
-  @Autowired
-  public CostumerResource(CostumerService costumerService, LogInfo logInfo) {
-    this.costumerService = costumerService;
-    this.logInfo = logInfo;
-  }
+    @Autowired
+    public CostumerResource(CostumerService costumerService, LogInfo logInfo) {
+        this.costumerService = costumerService;
+        this.logInfo = logInfo;
+    }
 
-  @PostMapping
-  public ResponseEntity<String> create(@RequestBody @Valid CreateCostumerDto costumer) {
-    logger.info(logInfo.getCorrelationLog() + "Creating costumer");
+    @PostMapping
+    public ResponseEntity<String> create(@RequestBody @Valid CreateCostumerDto costumer) {
+        logger.info(logInfo.getCorrelationLog() + "Creating costumer");
 
-    costumerService.create(costumer);
-    logger.info(logInfo.getCorrelationLog() + "Costumer created");
-    return ResponseEntity.ok("costumer created");
-  }
+        costumerService.create(costumer);
+        logger.info(logInfo.getCorrelationLog() + "Costumer created");
+        return ResponseEntity.ok("costumer created");
+    }
 
-  @GetMapping("{id}")
-  public ResponseEntity<Optional<Costumer>> create(@PathVariable int id) {
-    Optional<Costumer> costumer = costumerService.findById(id);
-    return ResponseEntity.ok(costumer);
-  }
+    @GetMapping("{id}")
+    public ResponseEntity<Optional<Costumer>> create(@PathVariable int id) {
+        Optional<Costumer> costumer = costumerService.findById(id);
+        return ResponseEntity.ok(costumer);
+    }
 
-  @GetMapping("filter")
-  public ResponseEntity<Page<Costumer>> findByFilter(
-          @RequestParam String filter, Pageable pageable) {
-    Page<Costumer> costumers = costumerService.findByFilterPaginated(filter, pageable);
-    return ResponseEntity.ok(costumers);
-  }
+    @GetMapping("filter")
+    public ResponseEntity<Page<Costumer>> findByFilter(
+            @RequestParam String filter, Pageable pageable) {
+        Page<Costumer> costumers = costumerService.findByFilterPaginated(filter, pageable);
+        return ResponseEntity.ok(costumers);
+    }
 }
